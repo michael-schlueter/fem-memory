@@ -42,3 +42,23 @@ export type GameAction =
   // Keeps the current settings but restarts game with freshly shuffled deck
   | { type: "restart"; deck: number[] };
 
+// Builds a shuffled array of pair-values sized to fill the board
+export function createDeck(
+  gridSize: GridSize,
+  random: () => number = Math.random,
+): number[] {
+  const pairs = (gridSize * gridSize) / 2;
+
+  // Create unshuffled deck
+  const pairValues = [];
+  for (let value = 1; value <= pairs; value++) pairValues.push(value);
+  const deck = [...pairValues, ...pairValues];
+
+  // Fisher-Yates shuffle in place
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+
+  return deck;
+}
