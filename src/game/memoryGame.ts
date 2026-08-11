@@ -78,6 +78,14 @@ export function createInitialState(
     moves: 0,
     seconds: 0,
     started: false,
-    status: 'playing',
-  }
+    status: "playing",
+  };
 }
+
+export function tileStatus(state: GameState, index: number): TileStatus {
+  if (state.matched.includes(index)) return "matched";
+  if (state.flipped.includes(index)) return "flipped";
+  return "hidden";
+}
+
+
