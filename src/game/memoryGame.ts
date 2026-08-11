@@ -88,4 +88,76 @@ export function tileStatus(state: GameState, index: number): TileStatus {
   return "hidden";
 }
 
+/* A mismatch stays face up until resolved: by timeout or by the player flipping a third tile */
+function resolveMismatch(state: GameState): GameState {
+  if (state.flipped.length < 2) return state;
+  const nextPlayer = (state.currentPlayer + 1) % state.settings.players;
+  return {
+    ...state,
+    flipped: [],
+    currentPlayer: nextPlayer,
+  };
+}
 
+export function gameReducer(state: GameState, action: GameAction): GameState {
+  switch (action.type) {
+    case "flip": {
+      // Check if game is currently active
+      if (state.status !== "playing") return state;
+
+      // Check if card was already flipped or matched
+      if (
+        state.matched.includes(action.index) ||
+        state.flipped.includes(action.index)
+      ) {
+        return state;
+      }
+
+      const base = resolveMismatch(state);
+
+      // Add index to flipped cards
+      const flipped = [...base.flipped, action.index];
+      // If only one card is flipped, no further action necessary
+      if (flipped.length < 2) {
+        return { ...base, flipped, started: true };
+      }
+
+      // If two cards flipped, compare to check for match
+      const [first, second] = flipped;
+      const moves = base.moves + 1;
+      // If mismatch, continue
+      if (base.deck[first] !== base.deck[second]) {
+        return { ...base, flipped, moves };
+      }
+
+      // If match, update the score and check if game is finished
+      const matched = [...base.matched, first, second];
+      const scores = base.scores.map((score, player) =>
+        player === base.currentPlayer ? score + 1 : score,
+      );
+
+      const won = matched.length === base.deck.length;
+
+      return {
+        ...base,
+        flipped: [],
+        matched,
+        scores,
+        moves,
+        status: won ? "won" : "playing",
+      };
+    }
+
+    case "resolve":
+      return resolveMismatch(state);
+
+    case "tick":
+      if (state.status !== "playing" || !state.started) return state;
+      return { ...state, seconds: state.seconds + 1 };
+
+    case "restart":
+      return {
+        ...createInitialState(state.settings, action.deck),
+      };
+  }
+}
