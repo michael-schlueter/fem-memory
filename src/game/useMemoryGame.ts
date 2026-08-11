@@ -14,7 +14,8 @@ export function useMemoryGame(settings: GameSettings) {
   );
 
   /* Flip a mismatched pair back after a beat, unless the player resolves
-  it earlier by flipping a third tile */
+  it earlier by flipping a third tile. Two flipped indices always indicate 
+  a mismatch (matched cards are instantly stored in matched) */
   const mismatch = state.flipped.length === 2;
   useEffect(() => {
     if (!mismatch) return;
