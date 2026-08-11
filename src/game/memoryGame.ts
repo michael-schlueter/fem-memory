@@ -62,3 +62,22 @@ export function createDeck(
 
   return deck;
 }
+
+export function createInitialState(
+  settings: GameSettings,
+  deck: number[],
+): GameState {
+  return {
+    settings,
+    deck,
+    flipped: [],
+    matched: [],
+    // returns 0 for each player
+    scores: Array.from({ length: settings.players }, () => 0),
+    currentPlayer: 0,
+    moves: 0,
+    seconds: 0,
+    started: false,
+    status: 'playing',
+  }
+}
