@@ -1,4 +1,5 @@
-// Joins class names, skipping falsy values.
+import { twMerge } from "tw-merge";
+
 export function cn(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(" ");
+  return twMerge(classes.filter(Boolean).join(" "));
 }
