@@ -220,3 +220,41 @@ describe("restart", () => {
     });
   });
 });
+
+describe("announcements", () => {
+  it("narrates a multiplayer mismatch, match, and win", () => {
+    const resolved = play(
+      createInitialState(multiplayerSettings, smallDeck),
+      { type: "flip", index: 0 },
+      { type: "flip", index: 2 },
+      { type: "resolve" },
+    );
+    expect(resolved.announcement).toBe("No match. Player 2's turn.");
+
+    const matched = play(
+      resolved,
+      { type: "flip", index: 0 },
+      { type: "flip", index: 1 },
+    );
+    expect(matched.announcement).toBe(
+      "Pair matched. Player 2 scores and goes again.",
+    );
+
+    const won = play(
+      matched,
+      { type: "flip", index: 2 },
+      { type: "flip", index: 3 },
+    );
+    expect(won.announcement).toBe("Pair matched. Game over!");
+  });
+
+  it("omits turn talk in solo games", () => {
+    const state = play(
+      createInitialState(soloSettings, smallDeck),
+      { type: "flip", index: 0 },
+      { type: "flip", index: 2 },
+      { type: "resolve" },
+    );
+    expect(state.announcement).toBe("No match.");
+  });
+});

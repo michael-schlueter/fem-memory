@@ -30,6 +30,7 @@ export type GameState = {
   // Flips to true on the very first tile flip
   started: boolean;
   status: GameStatus;
+  announcement: string;
 };
 
 export type GameAction =
@@ -79,6 +80,7 @@ export function createInitialState(
     seconds: 0,
     started: false,
     status: "playing",
+    announcement: "",
   };
 }
 
@@ -96,6 +98,10 @@ function resolveMismatch(state: GameState): GameState {
     ...state,
     flipped: [],
     currentPlayer: nextPlayer,
+    announcement:
+      state.settings.players > 1
+        ? `No match. Player ${nextPlayer + 1}'s turn.`
+        : "No match.",
   };
 }
 
@@ -145,6 +151,11 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         scores,
         moves,
         status: won ? "won" : "playing",
+        announcement: won
+          ? "Pair matched. Game over!"
+          : base.settings.players > 1
+            ? `Pair matched. Player ${base.currentPlayer + 1} scores and goes again.`
+            : "Pair matched.",
       };
     }
 
@@ -158,6 +169,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     case "restart":
       return {
         ...createInitialState(state.settings, action.deck),
+        announcement: "New game started.",
       };
   }
 }

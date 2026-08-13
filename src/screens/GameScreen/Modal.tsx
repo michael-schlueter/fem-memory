@@ -3,10 +3,16 @@ import { useEffect, useRef, type ReactNode } from "react";
 type ModalProps = {
   open: boolean;
   onClose?: () => void;
+  "aria-label": string;
   children: ReactNode;
 };
 
-function Modal({ open, onClose, children }: ModalProps) {
+function Modal({
+  open,
+  onClose,
+  "aria-label": ariaLabel,
+  children,
+}: ModalProps) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -19,6 +25,7 @@ function Modal({ open, onClose, children }: ModalProps) {
   return (
     <dialog
       ref={ref}
+      aria-label={ariaLabel}
       onClose={onClose}
       onCancel={(e) => {
         if (!onClose) e.preventDefault();

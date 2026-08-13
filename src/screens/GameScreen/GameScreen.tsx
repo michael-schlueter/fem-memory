@@ -112,7 +112,12 @@ export const GameScreen = ({ settings, onNewGame }: GameScreenProps) => {
             </div>
           )}
         </main>
+
+        <p aria-live="polite" className="sr-only">
+          {state.announcement}
+        </p>
       </div>
+
       <Modal open={won} aria-label="Game results">
         {result && (
           <ResultCard

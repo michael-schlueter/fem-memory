@@ -37,7 +37,11 @@ function MenuBar({ onRestart, onNewGame }: MenuBarProps) {
       >
         Menu
       </Button>
-      <Modal open={menuOpen} onClose={() => setMenuOpen(false)}>
+      <Modal
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        aria-label="Game menu"
+      >
         <div className="flex w-[327px] max-w-full flex-col gap-4 p-6">
           <Button
             variant="primary"

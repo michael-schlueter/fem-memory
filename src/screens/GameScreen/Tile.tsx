@@ -11,11 +11,20 @@ type TileProps = {
   onFlip: () => void;
 };
 
+function tileLabel(value: number, theme: Theme, status: TileStatus) {
+  if (status === "hidden") return "Face-down tile";
+  const face =
+    theme === "numbers" ? value : iconNames[(value - 1) % iconNames.length];
+  return status === "matched" ? `Matched tile: ${face}` : `Tile: ${face}`;
+}
+
 function Tile({ value, theme, status, gridSize, onFlip }: TileProps) {
   return (
     <button
       type="button"
       onClick={onFlip}
+      aria-disabled={status !== "hidden"}
+      aria-label={tileLabel(value, theme, status)}
       className={cn(
         "flex aspect-square w-full items-center justify-center rounded-full text-grey-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-800 motion-safe:transition-colors",
         gridSize === 6
