@@ -1,24 +1,22 @@
-import { cn } from "../../lib/cn";
-import { icons, type IconName } from "./Icons";
+import { icons, type IconName } from './Icons'
 
 type IconProps = {
-  name: IconName;
-  className?: string;
-};
-
-function Icon({ name, className }: IconProps) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn("inline-block bg-current", className)}
-      style={{
-        maskImage: `url("${icons[name]}")`,
-        maskRepeat: "no-repeat",
-        maskPosition: "center",
-        maskSize: "contain",
-      }}
-    />
-  );
+  name: IconName
+  className?: string
 }
 
-export default Icon;
+function Icon({ name, className }: IconProps) {
+  const { viewBox, path, fillRule } = icons[name]
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox={viewBox}
+      fill="currentColor"
+      className={className}
+    >
+      <path d={path} fillRule={fillRule} clipRule={fillRule} />
+    </svg>
+  )
+}
+
+export default Icon
