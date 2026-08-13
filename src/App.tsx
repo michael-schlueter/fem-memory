@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { GameSettings } from "./game/memoryGame";
-import { GameScreen } from "./screens/GameScreen";
+import { GameScreen } from "./screens/GameScreen/GameScreen";
 import StartScreen from "./screens/StartScreen/StartScreen";
 
 function App() {

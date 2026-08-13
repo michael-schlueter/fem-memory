@@ -1,4 +1,5 @@
 import { cn } from "../../lib/cn";
+import currentTurnArrow from "../../assets/current-turn-arrow.svg";
 
 type PlayerScoreProps = {
   playerNumber: number;
