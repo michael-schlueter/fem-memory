@@ -217,6 +217,7 @@ describe("restart", () => {
     const state = gameReducer(played, { type: "restart", deck: newDeck });
     expect(state).toEqual({
       ...createInitialState(multiplayerSettings, newDeck),
+      announcement: 'New game started.'
     });
   });
 });
