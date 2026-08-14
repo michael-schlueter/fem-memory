@@ -22,7 +22,7 @@ function Tile({ value, theme, status, gridSize, onFlip }: TileProps) {
   return (
     <button
       type="button"
-      onClick={onFlip}
+      onClick={() => status === "hidden" && onFlip()}
       aria-disabled={status !== "hidden"}
       aria-label={tileLabel(value, theme, status)}
       className={cn(
