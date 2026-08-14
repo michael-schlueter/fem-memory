@@ -24,7 +24,7 @@ function soloResult(state: GameState): { title: string; rows: ResultRow[] } {
   return {
     title: "You did it!",
     rows: [
-      { label: "Time Elpased", value: formatTime(state.seconds) },
+      { label: "Time Elapsed", value: formatTime(state.seconds) },
       { label: "Moves Taken", value: `${state.moves} Moves` },
     ],
   };

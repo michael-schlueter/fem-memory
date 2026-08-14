@@ -29,7 +29,7 @@ function ResultCard({
       <div
         className={cn(
           "flex w-full flex-col items-center gap-6 text-center",
-          variant === "solo" ? "md-gap-10" : "md-gap-14",
+          variant === "solo" ? "md:gap-10" : "md:gap-14",
         )}
       >
         <div
