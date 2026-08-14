@@ -15,7 +15,7 @@ function PlayerScore({ playerNumber, score, isCurrent }: PlayerScoreProps) {
           <img
             src={currentTurnArrow}
             alt=""
-            className="absolute -top-2 h-2 w-4 md:-top-3 md:h-3 md:w-6 xl:-top-[19px] xl:h-[19px] xl:w-[38px]"
+            className="absolute -top-3 h-3 w-6 md:-top-4 md:h-4 md:w-8 xl:-top-[19px] xl:h-[19px] xl:w-[38px]"
           />
         )}
         <div
